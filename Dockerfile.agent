@@ -1,0 +1,14 @@
+FROM python:3.12-slim
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+WORKDIR /app
+COPY pyproject.toml uv.lock .
+RUN uv sync --frozen --no-dev
+
+COPY agent/ agent/
+COPY data/ data/
+COPY langgraph.json ./
+
+EXPOSE 2024
+CMD ["uv", "run", "langgraph", "dev", "--port", "2024", "--host", "0.0.0.0", "--no-browser", "--no-reload"]

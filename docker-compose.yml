@@ -1,0 +1,20 @@
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+    ports:
+      - "2024:2024"
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
+
+  nginx:
+    build:
+      context: frontend
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - agent
