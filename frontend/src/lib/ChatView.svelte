@@ -8,7 +8,7 @@
 
   const stream = useStream({
     assistantId: "agent",
-    apiUrl: "http://localhost/api",
+    apiUrl: import.meta.env.VITE_API_URL || "http://localhost/api",
   });
 
   let displayMessages = $state<any[]>([]);
